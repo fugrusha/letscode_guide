@@ -2,7 +2,7 @@
 
 <body>
     <div>
-        <h1 inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        <h1 inline="text">Welcome, Username!</h1>
         <form action="/logout" method="post">
             <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             <input type="submit" value="Log Out"/>
@@ -30,6 +30,7 @@
         <b>{{id}}</b>
         <span>{{text}}</span>
         <i>{{tag}}</i>
+        <span>by {{getAuthorName}}</span>
     </div>
     {{/messages}}
 
