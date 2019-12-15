@@ -16,7 +16,7 @@ public class Message {
     private User author;
 
     public String getAuthorName() {
-        return author != null ? author.getUsername() : "<unknown>";
+        return author != null ? author.getUsername() : "unknown";
     }
 
     public Message(String text, String tag, User user) {
