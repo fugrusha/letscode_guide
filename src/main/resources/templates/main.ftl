@@ -5,6 +5,7 @@
     <div>
         <h1 inline="text">Welcome, Username!</h1>
         <@l.logout />
+        <span><a href="/user">User List</a> </span>
     </div>
 
     <div>
