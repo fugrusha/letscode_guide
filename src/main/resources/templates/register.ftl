@@ -4,9 +4,7 @@
 <@c.page>
 Add new user
 <!--Show msg about existing user-->
-<#if message??>
-    ${message}
-</#if>
+    ${message?ifExists}
 
 <@l.login "/register" />
 </@c.page>
