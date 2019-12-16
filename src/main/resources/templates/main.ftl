@@ -9,17 +9,18 @@
     </div>
 
     <div>
-        <form method="post">
-            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <input type="text" name="text" placeholder="What's new?">
             <input type="text" name="tag" placeholder="tags">
+            <input type="file" name="file">
             <button type="submit">Public post</button>
         </form>
     </div>
 
     <div> List of messages </div>
     <form method="get" action="main">
-        <input type="text" name="filter" placeholder="Find by tag" value="${filter}">
+        <input type="text" name="filter" placeholder="Find by tag" value="${filter?ifExists}">
         <button type="submit">Search</button>
     </form>
 
@@ -29,6 +30,11 @@
             <span>${message.text}</span>
             <i>${message.tag}</i>
             <span>by ${message.authorName}</span>
+            <div>
+                <#if message.filename??>
+                <img src="/img/${message.filename}">
+                </#if>
+            </div>
         </div>
     <#else> No messages
     </#list>
