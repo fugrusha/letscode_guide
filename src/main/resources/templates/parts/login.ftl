@@ -1,15 +1,32 @@
 <#macro logout>
-<form action="/logout" method="post">
-    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-    <input type="submit" value="Log Out"/>
-</form>
+<div class="form-group">
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-danger">Log Out</button>
+    </form>
+</div>
 </#macro>
 
-<#macro login path>
+<#macro login path isRegisterForm>
 <form action="${path}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div class="form-group">
+        <label class="col-sm-2 col-form-label">Username:</label>
+        <input type="text" class="col-sm-4 form-control" name="username" placeholder="Username"/>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 col-form-label">Password:</label>
+        <input type="password" class="col-sm-4 form-control" name="password" placeholder="Password"/>
+    </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-    <div><input type="submit" value="Sign In"/></div>
+
+    <button type="submit" class="btn btn-primary">
+        <#if !isRegisterForm>
+            Sign In
+        <#else>
+            Register
+        </#if>
+    </button>
+
+    <#if !isRegisterForm><p><a href="/register">Or you can register new account</a></p></#if>
 </form>
 </#macro>

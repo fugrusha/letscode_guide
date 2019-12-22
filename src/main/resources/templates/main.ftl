@@ -1,42 +1,59 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/login.ftl" as l>
+<#include "parts/security.ftl">
 
 <@c.page>
     <div>
-        <h1 inline="text">Welcome, Username!</h1>
-        <@l.logout />
-        <span><a href="/user">User List</a> </span>
+        <h1 inline="text">Welcome, ${name}!</h1>
     </div>
 
-    <div>
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <input type="text" name="text" placeholder="What's new?">
-            <input type="text" name="tag" placeholder="tags">
-            <input type="file" name="file">
-            <button type="submit">Public post</button>
+    <div class="form-row">
+        <form method="get" action="main" class="form-inline">
+            <input type="text" name="filter" class="form-control" placeholder="Find by tag" value="${filter?ifExists}">
+            <button type="submit" class="btn btn-primary ml-2">Search</button>
         </form>
     </div>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseMessage" role="button" aria-expanded="false" aria-controls="collapseExample">
+        New message
+    </a>
+    <div class="collapse" id="collapseMessage">
+        <div class="form-group mt-3">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="text" placeholder="What's new?">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="tag" placeholder="tags">
+                </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFie" name="file">
+                        <label class="custom-file-label" for="customFie">Choose File</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Public post</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <div> List of messages </div>
-    <form method="get" action="main">
-        <input type="text" name="filter" placeholder="Find by tag" value="${filter?ifExists}">
-        <button type="submit">Search</button>
-    </form>
 
+<div class="card-columns">
     <#list messages as message>
-        <div>
-            <b>${message.id}</b>
+        <div class="card border-info my-3" style="width: 18rem;">
+            <#if message.filename??>
+            <img class="card-img-top" src="/img/${message.filename}">
+        </#if>
+        <div class="m-2">
             <span>${message.text}</span>
             <i>${message.tag}</i>
-            <span>by ${message.authorName}</span>
-            <div>
-                <#if message.filename??>
-                <img src="/img/${message.filename}">
-                </#if>
-            </div>
+        </div>
+        <div class="card-footer text-muted">by ${message.authorName}</div>
+
         </div>
     <#else> No messages
     </#list>
+</div>
 
 </@c.page>
