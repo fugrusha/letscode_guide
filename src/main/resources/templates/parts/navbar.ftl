@@ -11,16 +11,26 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
-            </li><li class="nav-item">
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/main">Messages</a>
-            <#if isAdmin>
-            </li><li class="nav-item">
+                <#if isAdmin>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/user">User List</a>
             </li>
-            </#if>
-        </ul>
+        </
+        #if>
+        <#if user??>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/user/profile">My profile</a>
+        </li>
+    </
+    #if>
+    </ul>
 
-        <div class="navbar-text mr-3">${name}</div>
-        <div><@l.logout /></div>
+    <div class="navbar-text mr-3">${name}</div>
+    <div><@l.logout /></div>
     </div>
 </nav>
