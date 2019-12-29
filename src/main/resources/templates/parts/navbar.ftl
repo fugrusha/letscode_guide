@@ -12,14 +12,19 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
+            <#if user??>
             <li class="nav-item">
                 <a class="nav-link" href="/main">Messages</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user-tweets/${currentUserId}">My Tweets</a>
+            </li>
+            </#if>
             <#if isAdmin>
             <li class="nav-item">
                 <a class="nav-link" href="/user">User List</a>
             </li>
-        </#if>
+            </#if>
         <#if user??&&name!="Guest">
         <li class="nav-item">
             <a class="nav-link" href="/user/profile">My profile</a>
