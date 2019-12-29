@@ -1,8 +1,9 @@
+<#include "security.ftl">
 <#macro logout>
 <div class="form-group">
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-danger">Log Out</button>
+        <button type="submit" class="btn btn-info"><#if user??>Log Out<#else>Log in</#if></button>
     </form>
 </div>
 </#macro>
@@ -59,7 +60,7 @@
     </div>
     </div>
     <div class="col-sm-4">
-        <div class="g-recaptcha" data-sitekey="6LcFyMoUAAAAANAG_wJIdNEDr0iBIe_JUilAMbNV"></div>
+        <div class="g-recaptcha m-3" data-sitekey="6LcFyMoUAAAAANAG_wJIdNEDr0iBIe_JUilAMbNV"></div>
         <#if captchaError??>
             <div class="alert alert-danger" role="alert">
                 ${captchaError}
@@ -78,6 +79,6 @@
         </#if>
     </button>
 
-    <#if !isRegisterForm><p><a href="/register">Or you can register new account</a></p></#if>
+    <#if !isRegisterForm><p class="mt-3"><a href="/register">Or you can register new account</a></p></#if>
 </form>
 </#macro>
