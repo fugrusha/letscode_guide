@@ -14,15 +14,14 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/main">Messages</a>
-                <#if isAdmin>
             </li>
+            <#if isAdmin>
             <li class="nav-item">
                 <a class="nav-link" href="/user">User List</a>
             </li>
         </
         #if>
-        <#if user??>
-        </li>
+        <#if user??&&name!="Guest">
         <li class="nav-item">
             <a class="nav-link" href="/user/profile">My profile</a>
         </li>

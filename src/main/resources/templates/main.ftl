@@ -12,25 +12,40 @@
             <button type="submit" class="btn btn-primary ml-2">Search</button>
         </form>
     </div>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseMessage" role="button" aria-expanded="false" aria-controls="collapseExample">
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseMessage" role="button" aria-expanded="false"
+       aria-controls="collapseExample">
         New message
     </a>
-    <div class="collapse" id="collapseMessage">
-        <div class="form-group mt-3">
-            <form method="post" enctype="multipart/form-data">
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="text" placeholder="What's new?">
+<div class="collapse <#if message??>show</#if>" id="collapseMessage">
+    <div class="form-group mt-3">
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <div class="form-group">
+                <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}"
+                       value="<#if message??>${message.text}</#if>" name="text" placeholder="What's new?">
+                <#if textError??>
+                <div class="invalid-feedback">
+                    ${textError}
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="tag" placeholder="tags">
-                </div>
-                <div class="form-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFie" name="file">
-                        <label class="custom-file-label" for="customFie">Choose File</label>
-                    </div>
-                </div>
+            </
+            #if>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control ${(tagError??)?string('is-invalid', '')}"
+               value="<#if message??>${message.tag}</#if>" name="tag" placeholder="tags">
+        <#if tagError??>
+        <div class="invalid-feedback">
+            ${tagError}
+        </div>
+    </
+    #if>
+</div>
+<div class="form-group">
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFie" name="file">
+        <label class="custom-file-label" for="customFie">Choose File</label>
+    </div>
+</div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Public post</button>
                 </div>
