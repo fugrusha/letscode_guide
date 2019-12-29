@@ -1,8 +1,4 @@
 
-<div>
-    <h1 inline="text">Hey, here is 's tweets!</h1>
-</div>
-
 <div class="card-columns">
     <#list messages as message>
     <div class="card border-info my-3" style="width: 18rem;">

@@ -109,6 +109,10 @@ public class MainController {
         model.addAttribute("messages", tweets);
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
+        model.addAttribute("userChannel", user);
+        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
+        model.addAttribute("subscribersCount", user.getSubscribers().size());
+        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
 
         return "userMessages";
     }
@@ -134,8 +138,6 @@ public class MainController {
 
             messageRepo.save(message);
         }
-
-
         return "redirect:/user-tweets/" + user;
     }
 
