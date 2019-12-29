@@ -19,8 +19,7 @@
             <div class="invalid-feedback">
                 ${usernameError}
             </div>
-        </
-        #if>
+        </#if>
     </div>
 
     </div>
@@ -33,8 +32,7 @@
             <div class="invalid-feedback">
                 ${passwordError}
             </div>
-        </
-        #if>
+        </#if>
     </div>
     </div>
     <#if isRegisterForm>
@@ -45,8 +43,7 @@
                    name="password2" placeholder="Confirm password"/>
             <#if password2Error??>
             <div class="invalid-feedback">${password2Error}</div>
-        </
-        #if>
+        </#if>
     </div>
     </div>
 
@@ -58,10 +55,18 @@
                    value="<#if user??>${user.email}</#if>"/>
             <#if emailError??>
             <div class="invalid-feedback">${emailError}</div>
-        </
-        #if>
+        </#if>
     </div>
     </div>
+    <div class="col-sm-4">
+        <div class="g-recaptcha" data-sitekey="6LcFyMoUAAAAANAG_wJIdNEDr0iBIe_JUilAMbNV"></div>
+        <#if captchaError??>
+            <div class="alert alert-danger" role="alert">
+                ${captchaError}
+            </div>
+        </#if>
+    </div>
+
     </#if>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 

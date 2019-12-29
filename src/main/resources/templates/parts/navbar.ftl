@@ -19,14 +19,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/user">User List</a>
             </li>
-        </
-        #if>
+        </#if>
         <#if user??&&name!="Guest">
         <li class="nav-item">
             <a class="nav-link" href="/user/profile">My profile</a>
         </li>
-    </
-    #if>
+    </#if>
     </ul>
 
     <div class="navbar-text mr-3">${name}</div>

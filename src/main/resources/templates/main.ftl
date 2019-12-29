@@ -27,8 +27,7 @@
                 <div class="invalid-feedback">
                     ${textError}
                 </div>
-            </
-            #if>
+            </#if>
     </div>
     <div class="form-group">
         <input type="text" class="form-control ${(tagError??)?string('is-invalid', '')}"
@@ -37,8 +36,7 @@
         <div class="invalid-feedback">
             ${tagError}
         </div>
-    </
-    #if>
+    </#if>
 </div>
 <div class="form-group">
     <div class="custom-file">
