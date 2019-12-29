@@ -11,16 +11,56 @@
 <form action="${path}" method="post">
     <div class="form-group">
         <label class="col-sm-2 col-form-label">Username:</label>
-        <input type="text" class="col-sm-4 form-control" name="username" placeholder="Username"/>
+        <div class="col-sm-4">
+            <input type="text" class="form-control ${(usernameError??)?string('is-invalid', '')}"
+                   name="username" placeholder="Username"
+                   value="<#if user??>${user.username}</#if>"/>
+            <#if usernameError??>
+            <div class="invalid-feedback">
+                ${usernameError}
+            </div>
+        </
+        #if>
+    </div>
+
     </div>
     <div class="form-group">
         <label class="col-sm-2 col-form-label">Password:</label>
-        <input type="password" class="col-sm-4 form-control" name="password" placeholder="Password"/>
+        <div class="col-sm-4">
+            <input type="password" class="form-control ${(passwordError??)?string('is-invalid', '')}"
+                   name="password" placeholder="Password"/>
+            <#if passwordError??>
+            <div class="invalid-feedback">
+                ${passwordError}
+            </div>
+        </
+        #if>
+    </div>
     </div>
     <#if isRegisterForm>
     <div class="form-group">
+        <label class="col-sm-2 col-form-label">Password:</label>
+        <div class="col-sm-4">
+            <input type="password" class="form-control ${(password2Error??)?string('is-invalid', '')}"
+                   name="password2" placeholder="Confirm password"/>
+            <#if password2Error??>
+            <div class="invalid-feedback">${password2Error}</div>
+        </
+        #if>
+    </div>
+    </div>
+
+    <div class="form-group">
         <label class="col-sm-2 col-form-label">Email:</label>
-        <input type="email" class="col-sm-4 form-control" name="email" placeholder="Email"/>
+        <div class="col-sm-4">
+            <input type="email" class="form-control ${(emailError??)?string('is-invalid', '')}"
+                   name="email" placeholder="Email"
+                   value="<#if user??>${user.email}</#if>"/>
+            <#if emailError??>
+            <div class="invalid-feedback">${emailError}</div>
+        </
+        #if>
+    </div>
     </div>
     </#if>
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>
