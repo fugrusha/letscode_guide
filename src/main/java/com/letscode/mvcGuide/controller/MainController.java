@@ -3,8 +3,13 @@ package com.letscode.mvcGuide.controller;
 import com.letscode.mvcGuide.domain.Message;
 import com.letscode.mvcGuide.domain.User;
 import com.letscode.mvcGuide.repos.MessageRepo;
+import com.letscode.mvcGuide.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,16 +44,21 @@ public class MainController {
     private MessageRepo messageRepo;
 
     @GetMapping("/main")
-    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Message> messages = messageRepo.findAll();
+    public String main(
+            @RequestParam(required = false, defaultValue = "") String filter,
+            Model model,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        Page<Message> page;
 
         if (filter != null && !filter.isEmpty()) {
-            messages = messageRepo.findByTag(filter);
+            page = messageRepo.findByTag(filter, pageable);
         } else {
-            messages = messageRepo.findAll();
+            page = messageRepo.findAll(pageable);
         }
 
-        model.addAttribute("messages", messages);
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/main");
         model.addAttribute("filter", filter);
         return "main";
     }
@@ -60,7 +70,8 @@ public class MainController {
             @Valid Message message,
             BindingResult bindingResult,  // list of arguments and list of errors of validation
             Model model,
-            @RequestParam("file") MultipartFile file
+            @RequestParam("file") MultipartFile file,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) throws IOException {
         message.setAuthor(user);
         // check if validation has errors then dont save to DB
@@ -76,8 +87,10 @@ public class MainController {
             messageRepo.save(message); // save to db
         }
         //return list of messages
-        Iterable<Message> messages = messageRepo.findAll();
-        model.addAttribute("messages", messages);
+        Page<Message> page = messageRepo.findAll(pageable);
+
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/main");
         return "main";
     }
 
@@ -97,6 +110,9 @@ public class MainController {
         }
     }
 
+    @Autowired
+    private UserRepo userRepo;
+
     @GetMapping("/user-tweets/{user}")
     public String userMessages(
             @AuthenticationPrincipal User currentUser,
@@ -105,6 +121,10 @@ public class MainController {
             @RequestParam(required = false) Message message
     ) {
         Set<Message> tweets = user.getUserMessages();
+
+        String customURL = String.format("/user-tweets/%d", user.getId());
+        model.addAttribute("url", customURL);
+        model.addAttribute("page", Pageable.unpaged());
 
         model.addAttribute("messages", tweets);
         model.addAttribute("message", message);
